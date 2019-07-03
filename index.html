@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contador de palavras</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-center py-3">
+                    Contador de texto
+                </h3>
+                <p class="py-2">
+                        <input type="checkbox"> guardar texto
+                </p>
+                <ul class="list-group mb-1">
+                    <li class="list-group-item p-1">
+                        Palavras: <span data-palavras>0</span>
+                    </li>
+                    <li class="list-group-item p-1">
+                        Caracteres: <span data-caracteres>0</span>
+                    </li>
+                    <li class="list-group-item p-1">
+                        Tempo de leitura: <span data-tempo>0</span>
+                    </li>
+                </ul>
+                <textarea name="" id="text" cols="3" rows="4" class="form-control"></textarea>
+            </div>
+            <script>
+
+                const textarea = document.getElementById('text')
+                let check = document.querySelector('input')
+                check.addEventListener('click', () => window.localStorage.setItem('salvar contador', check.checked))
+                
+                loadStore()
+
+                function loadStore(){
+                    let check = window.localStorage.getItem('salvar contador')
+                    if(check){
+                        check.checked = true
+                        textarea.value = window.localStorage.getItem('contador-de-texo')
+                    }
+                }
+
+                textarea.addEventListener('keyup', contadorTexto)
+
+                function contadorTexto() {
+                    let htmlPalavras = document.querySelector('[data-palavras]')
+                    let htmlCaracteres = document.querySelector('[data-caracteres]')
+                    let htmlTempo = document.querySelector('[data-tempo]')
+
+                    let input = textarea.value.replace('  ', '')
+                    let palavras = input.split(' ')
+                    let caracteres = input.split('')
+
+                    let tempo = palavras.length * .2
+                    console.log(tempo)
+
+                    htmlPalavras.textContent = palavras.length
+                    htmlCaracteres.textContent = caracteres.length
+                    htmlTempo.textContent = `${tempo}s`
+
+                    window.localStorage.setItem('contador-de-texo', input)
+                    
+
+                }
+
+
+
+
+            </script>
+        </div>
+    </div>
+
+    <section >
+        <div class="container fixed-bottom bg-primary mb-2 py-1" style="border-radius: 5px">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="text-center text-white text-capitalize">
+                        crido por: thalison wilker
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
